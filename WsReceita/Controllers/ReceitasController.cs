@@ -16,77 +16,82 @@ namespace WsReceita.Controllers
     public class ReceitasController : ApiController
     {
         private Context.Context db = new Context.Context();
-
-        // GET: api/Receitas
-        //public List<Receita> GetReceita()
-        //{
-        //    var receita = db.Receita.ToList();
-
-        //    receita.ForEach(x => 
-        //    {
-        //        x.Medico = db.Medico.ToList().Where(y => y.CRM == x.CRM).FirstOrDefault();
-        //        x.Paciente = db.Paciente.ToList().Where(y => y.CPF == x.CPF).FirstOrDefault();
-        //        x.ItensReceita = db.Item.ToList().Where(y => y.NumReceita == x.NumReceita).ToList();
-        //    });
-
-        //    return receita;
-        //}
-
-        // GET: api/Receitas/5
-        [ResponseType(typeof(Receita))]
-        public IHttpActionResult GetReceita(int id)
+        
+        [Route("CancelarReceitaMedica/{numeroReceita}")]
+        [HttpGet]
+        public string CancelarReceitaMedica(int numeroReceita)
         {
-            Receita receita = db.Receita.Find(id);
+            var receita = this.ObterReceitaMedica(numeroReceita);
+            if (receita == null)
+                return "Não existe receita com esse número.";
+
+            if (receita.Utilizada)
+                return "Receita não pode ser cancelada porque já foi utilizada.";
+
+            if (receita.Cancelada)
+                return "Receita já foi cancelada.";
+
+            receita.Cancelada = true;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return "Erro ao atualizar os dados." + ex.Message;
+            }
+
+            return "Receita cancelada com sucesso";
+        }
+
+        [Route("UtilizarReceitaMedica/{numeroReceita}")]
+        [HttpGet]
+        public string UtilizarReceitaMedica(int numeroReceita)
+        {
+            var receita = this.ObterReceitaMedica(numeroReceita);
+            if (receita == null)
+                return "Não existe receita com esse número.";
+            
+            if (receita.Cancelada)
+                return "Receita não pode ser utilizada porque já foi cancelada.";
+
+            if (receita.Utilizada)
+                return "Receita já foi utilizada.";
+            
+            receita.Utilizada = true;
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return "Erro ao atualizar os dados." + ex.Message;
+            }
+            
+            return "Receita cancelada com sucesso";
+        }
+
+        [Route("ObterReceitaMedica/{numeroReceita}")]
+        [HttpGet]
+        public Receita ObterReceitaMedica(int numeroReceita)
+        {
+            Receita receita = db.Receita.Find(numeroReceita);
             receita.Medico = db.Medico.ToList().Where(y => y.CRM == receita.CRM).FirstOrDefault();
             receita.Paciente = db.Paciente.ToList().Where(y => y.CPF == receita.CPF).FirstOrDefault();
             receita.ItensReceita = db.Item.ToList().Where(y => y.NumReceita == receita.NumReceita).ToList();
 
             if (receita == null)
             {
-                return NotFound();
+                return null;
             }
 
-            return Ok(receita);
+            return receita;
         }
 
-        // PUT: api/Receitas/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutReceita(int id, Receita receita)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != receita.NumReceita)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(receita).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ReceitaExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/Receitas
-        //[ResponseType(typeof(ResultCadastroReceita))]
-        public ResultCadastroReceita PostReceita(Receita receita)
+        [Route("CadastrarReceitaMedica/{numeroReceita}")]
+        [HttpPost]
+        public ResultCadastroReceita CadastrarReceitaMedica(Receita receita)
         {
             if (!ModelState.IsValid)
             {
@@ -130,34 +135,10 @@ namespace WsReceita.Controllers
             return new ResultCadastroReceita("Cadastrado com sucesso.", receita);
         }
 
-        // DELETE: api/Receitas/5
-        [ResponseType(typeof(Receita))]
-        public IHttpActionResult DeleteReceita(int id)
-        {
-            Receita receita = db.Receita.Find(id);
-            if (receita == null)
-            {
-                return NotFound();
-            }
-
-            db.Receita.Remove(receita);
-            db.SaveChanges();
-
-            return Ok(receita);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         private bool ReceitaExists(int id)
         {
             return db.Receita.Count(e => e.NumReceita == id) > 0;
         }
+
     }
 }
