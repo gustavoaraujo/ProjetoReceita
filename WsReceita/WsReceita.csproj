@@ -175,19 +175,22 @@
     <Compile Include="Context\Context.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReceitasController.cs" />
+    <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201610301257597_InitialMigration.cs" />
-    <Compile Include="Migrations\201610301257597_InitialMigration.Designer.cs">
-      <DependentUpon>201610301257597_InitialMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201611051851593_Inicial.cs" />
+    <Compile Include="Migrations\201611051851593_Inicial.Designer.cs">
+      <DependentUpon>201611051851593_Inicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Medico.cs" />
+    <Compile Include="Models\NumeroReceita.cs" />
     <Compile Include="Models\Paciente.cs" />
     <Compile Include="Models\Receita.cs" />
     <Compile Include="Models\ResultCadastroReceita.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -243,17 +246,17 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201610301257597_InitialMigration.resx">
-      <DependentUpon>201610301257597_InitialMigration.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201611051851593_Inicial.resx">
+      <DependentUpon>201611051851593_Inicial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

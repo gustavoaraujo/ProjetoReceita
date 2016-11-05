@@ -19,5 +19,6 @@ namespace WsReceita.Models
         public string Nome { get; set; }
         [DataMember]
         public List<Receita> Receitas { get; set; }
+        public Usuario Usuario { get; set; }
     }
 }

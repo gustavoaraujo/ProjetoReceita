@@ -17,9 +17,9 @@ namespace WsReceita.Controllers
     {
         private Context.Context db = new Context.Context();
         
-        [Route("CancelarReceitaMedica/{numeroReceita}")]
-        [HttpGet]
-        public string CancelarReceitaMedica(int numeroReceita)
+        [Route("CancelarReceitaMedica")]
+        [HttpPost]
+        public string CancelarReceitaMedica(NumeroReceita numeroReceita)
         {
             var receita = this.ObterReceitaMedica(numeroReceita);
             if (receita == null)
@@ -45,9 +45,9 @@ namespace WsReceita.Controllers
             return "Receita cancelada com sucesso";
         }
 
-        [Route("UtilizarReceitaMedica/{numeroReceita}")]
-        [HttpGet]
-        public string UtilizarReceitaMedica(int numeroReceita)
+        [Route("UtilizarReceitaMedica")]
+        [HttpPost]
+        public string UtilizarReceitaMedica(NumeroReceita numeroReceita)
         {
             var receita = this.ObterReceitaMedica(numeroReceita);
             if (receita == null)
@@ -72,11 +72,11 @@ namespace WsReceita.Controllers
             return "Receita cancelada com sucesso";
         }
 
-        [Route("ObterReceitaMedica/{numeroReceita}")]
-        [HttpGet]
-        public Receita ObterReceitaMedica(int numeroReceita)
+        [Route("ObterReceitaMedica")]
+        [HttpPost]
+        public Receita ObterReceitaMedica(NumeroReceita numeroReceita)
         {
-            Receita receita = db.Receita.Find(numeroReceita);
+            Receita receita = db.Receita.Find(numeroReceita.Numero);
             receita.Medico = db.Medico.ToList().Where(y => y.CRM == receita.CRM).FirstOrDefault();
             receita.Paciente = db.Paciente.ToList().Where(y => y.CPF == receita.CPF).FirstOrDefault();
             receita.ItensReceita = db.Item.ToList().Where(y => y.NumReceita == receita.NumReceita).ToList();
@@ -89,7 +89,7 @@ namespace WsReceita.Controllers
             return receita;
         }
 
-        [Route("CadastrarReceitaMedica/{numeroReceita}")]
+        [Route("CadastrarReceitaMedica")]
         [HttpPost]
         public ResultCadastroReceita CadastrarReceitaMedica(Receita receita)
         {
@@ -102,14 +102,14 @@ namespace WsReceita.Controllers
             var medico = listaMedico.Where(x => x.CRM == receita.Medico.CRM &&
                                             x.Nome == receita.Medico.Nome);
 
-            if (medico == null)
+            if (medico.Count() == 0)
                 db.Medico.Add(receita.Medico);
             else
                 receita.Medico = medico.FirstOrDefault();
 
             var paciente = db.Paciente.Where(x => x.CPF == receita.Paciente.CPF &&
                                             x.Nome == receita.Paciente.Nome);
-            if (paciente == null)
+            if (paciente.Count() == 0)
                 db.Paciente.Add(receita.Paciente);
             else
                 receita.Paciente = paciente.FirstOrDefault();

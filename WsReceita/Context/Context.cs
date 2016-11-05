@@ -13,6 +13,15 @@ namespace WsReceita.Context
         public DbSet<Medico> Medico { get; set; }
         public DbSet<Paciente> Paciente { get; set; }
         public DbSet<Receita> Receita { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Usuario>()
+           .HasOptional(a => a.Medico)
+           .WithRequired(s => s.Usuario);
+
+        }
 
         public Context() : base("ReceitaDB")
         {
