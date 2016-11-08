@@ -1,0 +1,154 @@
+<definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="urn:wsReceita" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:wsReceita">
+    <types>
+        <xsd:schema targetNamespace="urn:wsReceita">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+            <xsd:complexType name="tNumeroReceita">
+                <xsd:sequence>
+                    <xsd:element name="Numero" type="xsd:int" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="tPaciente">
+                <xsd:sequence>
+                    <xsd:element name="Cpf" type="xsd:string" />
+                    <xsd:element name="Nome" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="tUsuario">
+                <xsd:sequence>
+                    <xsd:element name="IdUsuario" type="xsd:int" />
+                    <xsd:element name="Login" type="xsd:string" />
+                    <xsd:element name="Senha" type="xsd:string" />
+                    <xsd:element name="Medico" type="tns:tMedico" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="tMedico">
+                <xsd:sequence>
+                    <xsd:element name="CRM" type="xsd:string" />
+                    <xsd:element name="Nome" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="tReceita">
+                <xsd:sequence>
+                    <xsd:element name="NumReceita" type="xsd:int" />
+                    <xsd:element name="Data" type="xsd:date" />
+                    <xsd:element name="Medico" type="tns:tMedico" />
+                    <xsd:element name="Paciente" type="tns:tPaciente" />
+                    <xsd:element name="ItensReceita" type="tns:tItensReceita" />
+                    <xsd:element name="Utilizada" type="xsd:boolean" />
+                    <xsd:element name="Cancelada" type="xsd:boolean" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="tItensReceita">
+                <xsd:sequence>
+                    <xsd:element name="Item" type="tns:tItem" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="tItem">
+                <xsd:sequence>
+                    <xsd:element name="Id" type="xsd:int" />
+                    <xsd:element name="RegAnvisa" type="xsd:int" />
+                    <xsd:element name="Instrucao" type="xsd:string" />
+                    <xsd:element name="Nome" type="xsd:string" />
+                    <xsd:element name="Uso" type="xsd:string" />
+                    <xsd:element name="ContraIndicacao" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="tResultCadastroReceita">
+                <xsd:sequence>
+                    <xsd:element name="Msg" type="xsd:string" />
+                    <xsd:element name="CPF" type="xsd:string" />
+                    <xsd:element name="CRM" type="xsd:string" />
+                    <xsd:element name="DataCadastro" type="xsd:date" />
+                    <xsd:element name="NumeroReceita" type="xsd:int" />
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </types>
+    <message name="CancelarReceitaMedicaRequest">
+        <part name="person" type="tns:tNumeroReceita" />
+    </message>
+    <message name="CancelarReceitaMedicaResponse">
+        <part name="result" type="xsd:string" />
+    </message>
+    <message name="UtilizarReceitaMedicaRequest">
+        <part name="id" type="tns:tNumeroReceita" />
+    </message>
+    <message name="UtilizarReceitaMedicaResponse">
+        <part name="result" type="xsd:string" />
+    </message>
+    <message name="ObterReceitaMedicaRequest">
+        <part name="person" type="tns:tNumeroReceita" />
+    </message>
+    <message name="ObterReceitaMedicaResponse">
+        <part name="result" type="tns:tReceita" />
+    </message>
+    <message name="CadastrarReceitaRequest">
+        <part name="person" type="tns:tReceita" />
+    </message>
+    <message name="CadastrarReceitaResponse">
+        <part name="result" type="tns:tResultCadastroReceita" />
+    </message>
+    <portType name="wsReceitaPortType">
+        <operation name="CancelarReceitaMedica">
+            <input message="tns:CancelarReceitaMedicaRequest" />
+            <output message="tns:CancelarReceitaMedicaResponse" />
+        </operation>
+        <operation name="UtilizarReceitaMedica">
+            <input message="tns:UtilizarReceitaMedicaRequest" />
+            <output message="tns:UtilizarReceitaMedicaResponse" />
+        </operation>
+        <operation name="ObterReceitaMedica">
+            <input message="tns:ObterReceitaMedicaRequest" />
+            <output message="tns:ObterReceitaMedicaResponse" />
+        </operation>
+        <operation name="CadastrarReceitaMedica">
+            <input message="tns:CadastrarReceitaMedicaRequest" />
+            <output message="tns:CadastrarReceitaMedicaResponse" />
+        </operation>
+    </portType>
+    <binding name="wsReceitaBinding" type="tns:wsReceitaPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="CancelarReceitaMedica">
+            <soap:operation soapAction="http://localhost:4676/CancelarReceitaMedica" style="rpc" />
+            <input>
+                <soap:body use="encoded" namespace="" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <operation name="UtilizarReceitaMedica">
+            <soap:operation soapAction="http://localhost:4676/UtilizarReceitaMedica" style="rpc" />
+            <input>
+                <soap:body use="encoded" namespace="" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <operation name="ObterReceitaMedica">
+            <soap:operation soapAction="http://localhost:4676/ObterReceitaMedica" style="rpc" />
+            <input>
+                <soap:body use="encoded" namespace="" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <operation name="CadastrarReceitaMedica">
+            <soap:operation soapAction="http://localhost:4676/CadastrarReceitaMedica" style="rpc" />
+            <input>
+                <soap:body use="encoded" namespace="" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="wsReceita">
+        <port name="wsReceitaPort" binding="tns:wsReceitaBinding">
+            <soap:address location="http://localhost:4676" />
+        </port>
+    </service>
+</definitions>

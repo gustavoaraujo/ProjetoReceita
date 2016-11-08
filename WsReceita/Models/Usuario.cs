@@ -18,8 +18,6 @@ namespace WsReceita.Models
         public string Login { get; set; }
         [DataMember]
         public string Senha { get; set; }
-        //[DataMember]
-        //public string CRM { get; set; }
         [ForeignKey("Medico")]
         public string CRM { get; set; }
         [DataMember]

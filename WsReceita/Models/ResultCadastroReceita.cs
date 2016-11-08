@@ -7,6 +7,10 @@ namespace WsReceita.Models
 {
     public class ResultCadastroReceita
     {
+        public ResultCadastroReceita()
+        {
+        }
+
         public ResultCadastroReceita(string msg, Receita receita)
         {
             this.Msg = msg;
