@@ -77,14 +77,13 @@ namespace WsReceita.Controllers
         public Receita ObterReceitaMedica(NumeroReceita numeroReceita)
         {
             Receita receita = db.Receita.Find(numeroReceita.Numero);
+            
+            if (receita == null)
+                return null;
+            
             receita.Medico = db.Medico.ToList().Where(y => y.CRM == receita.CRM).FirstOrDefault();
             receita.Paciente = db.Paciente.ToList().Where(y => y.CPF == receita.CPF).FirstOrDefault();
             receita.ItensReceita = db.Item.ToList().Where(y => y.NumReceita == receita.NumReceita).ToList();
-
-            if (receita == null)
-            {
-                return null;
-            }
 
             return receita;
         }
