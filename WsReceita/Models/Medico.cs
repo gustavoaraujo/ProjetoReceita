@@ -14,7 +14,7 @@ namespace WsReceita.Models
         [Key]
         [DataMember]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public string CRM { get; set; }
+        public string Crm { get; set; }
         [DataMember]
         public string Nome { get; set; }
         [DataMember]

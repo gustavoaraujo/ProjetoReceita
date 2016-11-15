@@ -28,7 +28,7 @@ namespace WsReceita.Controllers
 
             if (this.UsuarioExists(usuario.Login))
             {
-                var medico = db.Usuarios.Where(x => x.CRM == usuario.CRM).FirstOrDefault();
+                var medico = db.Usuarios.Where(x => x.Crm == usuario.Crm).FirstOrDefault();
 
                 if (medico != null)
                     return "Erro ao cadastrar usuário: Médico já possui login de usuário.";
@@ -37,11 +37,11 @@ namespace WsReceita.Controllers
             }
             else
             {
-                if (usuario.CRM != null)
+                if (usuario.Crm != null)
                 {
                     var medico = db.Medico.Add(usuario.Medico);
                     if (medico == null)
-                        return "Erro ao cadastrar usuário: CRM inválido.";
+                        return "Erro ao cadastrar usuário: Crm inválido.";
                 }
             }
 
@@ -73,9 +73,9 @@ namespace WsReceita.Controllers
             return usuario.Count() > 0;
         }
 
-        private bool MedicoExists(string crm)
+        private bool MedicoExists(string Crm)
         {
-            var medicos = db.Medico.Where(x => x.CRM == crm);
+            var medicos = db.Medico.Where(x => x.Crm == Crm);
 
             return medicos.Count() > 0;
         }
@@ -89,9 +89,9 @@ namespace WsReceita.Controllers
             if (userLogin == null)
                 return null;
 
-            userLogin.Medico = db.Medico.Where(x => x.CRM == userLogin.CRM).FirstOrDefault();
+            userLogin.Medico = db.Medico.Where(x => x.Usuario.IdUsuario == userLogin.IdUsuario).FirstOrDefault();
 
-            var listaReceitas = db.Receita.Where(x => x.CRM == userLogin.CRM).ToList();
+            var listaReceitas = db.Receita.Where(x => x.Crm == userLogin.Crm).ToList();
 
             var rc = new ReceitasController();
 

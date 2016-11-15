@@ -19,7 +19,7 @@ namespace WsReceita.Models
         [DataMember]
         public string Senha { get; set; }
         [ForeignKey("Medico")]
-        public string CRM { get; set; }
+        public string Crm { get; set; }
         [DataMember]
         public Medico Medico { get; set; }
     }

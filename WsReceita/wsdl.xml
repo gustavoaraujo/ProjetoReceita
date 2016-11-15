@@ -24,7 +24,7 @@
             </xsd:complexType>
             <xsd:complexType name="tMedico">
                 <xsd:sequence>
-                    <xsd:element name="CRM" type="xsd:string" />
+                    <xsd:element name="Crm" type="xsd:string" />
                     <xsd:element name="Nome" type="xsd:string" />
                 </xsd:sequence>
             </xsd:complexType>
@@ -57,8 +57,8 @@
             <xsd:complexType name="tResultCadastroReceita">
                 <xsd:sequence>
                     <xsd:element name="Msg" type="xsd:string" />
-                    <xsd:element name="CPF" type="xsd:string" />
-                    <xsd:element name="CRM" type="xsd:string" />
+                    <xsd:element name="Cpf" type="xsd:string" />
+                    <xsd:element name="Crm" type="xsd:string" />
                     <xsd:element name="DataCadastro" type="xsd:date" />
                     <xsd:element name="NumeroReceita" type="xsd:int" />
                 </xsd:sequence>

@@ -20,14 +20,14 @@ namespace WsReceita.Models
         [DataMember]
         public DateTime Data { get; set; }
         
-        public string CRM { get; set; }
+        public string Crm { get; set; }
         [DataMember]
-        [ForeignKey("CRM")]
+        [ForeignKey("Crm")]
         public Medico Medico { get; set; }
         
-        public string CPF { get; set; }
+        public string Cpf { get; set; }
         [DataMember]
-        [ForeignKey("CPF")]
+        [ForeignKey("Cpf")]
         public Paciente Paciente { get; set; }
 
         [DataMember]

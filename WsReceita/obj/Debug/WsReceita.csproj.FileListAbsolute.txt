@@ -104,8 +104,6 @@ E:\ProjetoReceita\WsReceita\bin\Antlr3.Runtime.pdb
 E:\ProjetoReceita\WsReceita\obj\Debug\WsReceita.csprojResolveAssemblyReference.cache
 E:\ProjetoReceita\WsReceita\obj\Debug\WsReceita.dll
 E:\ProjetoReceita\WsReceita\obj\Debug\WsReceita.pdb
-E:\ProjetoReceita\WsReceita\obj\Debug\WsReceita.Migrations.Inicial.resources
-E:\ProjetoReceita\WsReceita\obj\Debug\WsReceita.csproj.GenerateResource.Cache
 E:\ProjetoReceita\WsReceita\bin\Microsoft.Owin.Cors.dll
 E:\ProjetoReceita\WsReceita\bin\Microsoft.Owin.dll
 E:\ProjetoReceita\WsReceita\bin\Microsoft.Owin.Host.SystemWeb.dll
@@ -118,3 +116,5 @@ E:\ProjetoReceita\WsReceita\bin\Microsoft.Owin.Cors.xml
 E:\ProjetoReceita\WsReceita\bin\Microsoft.Owin.Host.SystemWeb.xml
 E:\ProjetoReceita\WsReceita\bin\Microsoft.Owin.Hosting.xml
 E:\ProjetoReceita\WsReceita\bin\System.Web.Http.Owin.xml
+E:\ProjetoReceita\WsReceita\obj\Debug\WsReceita.Migrations.Initial.resources
+E:\ProjetoReceita\WsReceita\obj\Debug\WsReceita.csproj.GenerateResource.Cache

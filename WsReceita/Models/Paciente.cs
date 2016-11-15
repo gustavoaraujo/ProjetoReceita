@@ -14,7 +14,7 @@ namespace WsReceita.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [DataMember]
-        public string CPF { get; set; }
+        public string Cpf { get; set; }
         [DataMember]
         public string Nome { get; set; }
         [DataMember]

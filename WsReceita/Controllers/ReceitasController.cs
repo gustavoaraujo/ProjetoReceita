@@ -69,7 +69,7 @@ namespace WsReceita.Controllers
                 return "Erro ao atualizar os dados." + ex.Message;
             }
             
-            return "Receita cancelada com sucesso";
+            return "Receita utilizada com sucesso";
         }
 
         [Route("ObterReceitaMedica")]
@@ -81,8 +81,8 @@ namespace WsReceita.Controllers
             if (receita == null)
                 return null;
             
-            receita.Medico = db.Medico.ToList().Where(y => y.CRM == receita.CRM).FirstOrDefault();
-            receita.Paciente = db.Paciente.ToList().Where(y => y.CPF == receita.CPF).FirstOrDefault();
+            receita.Medico = db.Medico.ToList().Where(y => y.Crm == receita.Crm).FirstOrDefault();
+            receita.Paciente = db.Paciente.ToList().Where(y => y.Cpf == receita.Cpf).FirstOrDefault();
             receita.ItensReceita = db.Item.ToList().Where(y => y.NumReceita == receita.NumReceita).ToList();
 
             return receita;
@@ -92,13 +92,8 @@ namespace WsReceita.Controllers
         [HttpPost]
         public ResultCadastroReceita CadastrarReceitaMedica(Receita receita)
         {
-            if (!ModelState.IsValid)
-            {
-                return new ResultCadastroReceita("Falha técnica ao cadastrar receita. Consulte o suporte.", receita);
-            }
-
             var listaMedico = db.Medico.ToList<Medico>();
-            var medico = listaMedico.Where(x => x.CRM == receita.Medico.CRM &&
+            var medico = listaMedico.Where(x => x.Crm == receita.Medico.Crm &&
                                             x.Nome == receita.Medico.Nome);
 
             if (medico.Count() == 0)
@@ -106,7 +101,7 @@ namespace WsReceita.Controllers
             else
                 receita.Medico = medico.FirstOrDefault();
 
-            var paciente = db.Paciente.Where(x => x.CPF == receita.Paciente.CPF &&
+            var paciente = db.Paciente.Where(x => x.Cpf == receita.Paciente.Cpf &&
                                             x.Nome == receita.Paciente.Nome);
             if (paciente.Count() == 0)
                 db.Paciente.Add(receita.Paciente);
