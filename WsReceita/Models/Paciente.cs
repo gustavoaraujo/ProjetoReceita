@@ -11,6 +11,11 @@ namespace WsReceita.Models
     [Table("Paciente")]
     public class Paciente
     {
+        public Paciente()
+        {
+            Receitas = new List<Receita>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [DataMember]
